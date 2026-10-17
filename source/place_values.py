@@ -23,7 +23,6 @@ class PlaceValues:
         number (int): 
             The integer to decompose into place-value digits.
     """
-
     number: int
 
     def __init__(self, number):
@@ -93,7 +92,6 @@ class PlaceValues:
             list[int] | list[str]:
                 Either a list of ints or a list of strings depending on `as_strings`
         """
-        
         number_str = str(self.number)
         length = len(number_str)
 
