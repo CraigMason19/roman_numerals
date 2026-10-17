@@ -1,4 +1,3 @@
-
 import unittest
 
 from source.place_values import PlaceValues
