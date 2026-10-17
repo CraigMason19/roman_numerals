@@ -4,11 +4,19 @@ A Python project to represent and work with Roman Numerals. Just a fun mini-proj
 
 Originally wrote the code as part of my solution to https://projecteuler.net/problem=89
 
-DEVA SEMPRE!
+DEVA SEMPER!
 
 # links
 - https://projecteuler.net/about=roman_numerals
 - https://en.wikipedia.org/wiki/Roman_numerals
+
+# Notes
+
+```python
+NUMERALS = { 'I': 1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000 }
+```
+
+`LCD` numerals can sometimes be hard to remember, so a good mnemonic is `Liquid Crystal Display`.
 
 # Numeral
 
