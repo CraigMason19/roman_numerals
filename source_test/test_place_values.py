@@ -45,3 +45,38 @@ class TestPlaceValuesAttributes(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
+class TestPlaceValuesDecompose(unittest.TestCase):
+    def test_returns_list(self):
+        result = PlaceValues(1609).decompose()
+        
+        self.assertIsInstance(result, list)
+
+    def test_returns_list_of_int(self):
+        result = PlaceValues(1609).decompose(as_strings=False)
+
+        for _ in result:
+            self.assertIsInstance(_, int)
+
+    def test_returns_list_of_str(self):
+        result = PlaceValues(1609).decompose(as_strings=True)
+
+        for _ in result:
+            self.assertIsInstance(_, str)
+
+    def test_99_999_decomposes_correctly(self):
+        result = PlaceValues(99_999).decompose()
+        expected = [90000, 9000, 900, 90, 9]
+
+        self.assertEqual(result, expected)
+
+    def test_as_strings_false(self):
+        result = PlaceValues(1609).decompose()
+        expected = [1000, 600, 0, 9]
+
+        self.assertEqual(result, expected)
+
+    def test_as_strings_true(self):
+        result = PlaceValues(1609).decompose(as_strings=True)
+        expected = ['1000', '600', '00', '9']
+
+        self.assertEqual(result, expected)
