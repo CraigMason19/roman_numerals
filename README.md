@@ -23,6 +23,7 @@ Example:
 ```python
 >>> PlaceValues(1600).decompose()
 [1000, 600, 0, 0]
+
 >>> PlaceValues(1600).decompose(as_strings=True)
-['1000', '600', '00', '9']
+['1000', '600', '00', '0']
 ```

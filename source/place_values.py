@@ -1,3 +1,10 @@
+"""
+place_values.py
+---------------
+
+
+"""
+
 from dataclasses import dataclass
 
 @dataclass
@@ -81,7 +88,7 @@ class PlaceValues:
             >>> PlaceValues(1600).decompose()
             [1000, 600, 0, 0]
             >>> PlaceValues(1600).decompose(as_strings=True)
-            ['1000', '600', '00', '9']
+            ['1000', '600', '00', '0']
 
         Args:
             as_strings (bool):
