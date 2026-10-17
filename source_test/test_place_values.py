@@ -3,6 +3,18 @@ import unittest
 from source.place_values import PlaceValues
 
 
+class TestPlaceValuesConstruction(unittest.TestCase):
+    def test_negative_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            _ = PlaceValues(-1)
+
+    def test_0_construction_doesnt_raise_error(self):
+        try:
+            _ = PlaceValues(0)
+        except Exception as e: # pragma: no cover
+            self.fail(f"Raised an exception: {e}")
+
+
 class TestPlaceValuesAttributes(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -31,3 +43,5 @@ class TestPlaceValuesAttributes(unittest.TestCase):
         expected = 3
 
         self.assertEqual(result, expected)
+
+
