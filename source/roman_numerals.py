@@ -1,5 +1,3 @@
-
-
 from typing import Self
 
 
@@ -12,11 +10,6 @@ NUMERALS = {
     'D':500, 'd':500,
     'M':1000, 'm':1000,
 }
-
-
-# @dataclass
-# class Units:
-#     thousands
 
 
 class Numeral:
@@ -34,6 +27,9 @@ class Numeral:
 
     @staticmethod
     def is_valid(numeral_str : str) -> bool:
+        if numeral_str == "":
+            return False
+
         for n in numeral_str:
             if n not in NUMERALS:
                 return False
