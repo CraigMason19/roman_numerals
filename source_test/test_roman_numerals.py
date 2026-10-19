@@ -22,7 +22,13 @@ class TestNumeralMinimalSavingProperty(unittest.TestCase):
 
 
 class TestNumeralEQ(unittest.TestCase):
-    def test_numeral_minimal__eq_true(self):
+    def test_eq_not_a_numeral(self):
+        result = Numeral('VIIII') == int(5)
+        expected = False
+
+        self.assertEqual(result, expected)
+
+    def test_numeral_minimal_eq_true(self):
         result = Numeral('VIIII') == Numeral('IX')
         expected = True
 
@@ -52,9 +58,9 @@ class TestNumeralFromInt(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = Numeral.from_int(0)
 
+    # print_numeral_details(Numeral.from_int(9999))
+    # print_numeral_details(Numeral.from_int(10_000))
 
-# print_numeral_details(Numeral.from_int(9999))
-# print_numeral_details(Numeral.from_int(10_000))
 
 
 class TestNumeralStringRepresentation(unittest.TestCase):
