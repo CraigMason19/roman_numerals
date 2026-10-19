@@ -55,3 +55,17 @@ class TestNumeralFromInt(unittest.TestCase):
 
 # print_numeral_details(Numeral.from_int(9999))
 # print_numeral_details(Numeral.from_int(10_000))
+
+
+class TestNumeralStringRepresentation(unittest.TestCase):
+    def test_numeral_str(self):
+        result = str(Numeral("MDCCCLXVII"))
+        expected = "MDCCCLXVII"
+
+        self.assertEqual(result, expected)
+
+    def test_numeral_repr(self):
+        result = repr(Numeral.from_int(1867))
+        expected = "Numeral('MDCCCLXVII')"
+
+        self.assertEqual(result, expected)

@@ -166,28 +166,42 @@ class Numeral:
 
         return total + int(NUMERALS[numeral_str[-1:]])
 
+    def __str__(self) -> str:
+        """
+        Displays the numeral using the `str` instance attribute.
 
+        Example:
+            n = Numeral("MDCCCXLIX")
+            >>> str(n)
+            "MDCCCXLIX"
+
+        Returns:
+            str
+        """
+        return f"{self.str}"
     
     def __repr__(self) -> str:
+        """
+        Displays the numeral using the `str` instance attribute.
+
+        Example:
+            n = Numeral("MDCCCXLIX")
+            >>> repr(n)
+            "Numeral('MDCCCXLIX')"
+
+        Returns:
+            str
+        """
         return f"Numeral('{self.str}')"
-
-
-
-
-
-
- 
 
 
 def print_numeral_details(numeral: Numeral) -> None:
     """
-    Prints the numeral's ful
+    Prints the numeral's full details for useful display / debugging
     """
     print(numeral)
     print(f"\tstr -> {numeral.str}")
     print(f"\tvalue -> {numeral.value}")
     print(f"\tminimal_str -> {numeral.minimal_str}")
+    print(f"\tminimal_saving -> {numeral.minimal_saving}")
     print(f"\tuses_subtractive_pair_rule -> {numeral.uses_subtractive_pair_rule(numeral.str)}")
-
-
-
