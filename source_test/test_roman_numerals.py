@@ -53,6 +53,20 @@ class TestNumeralEQ(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
+class TestNumeralIsValid(unittest.TestCase):
+    def test_is_valid_empty_string_false(self):
+        result = Numeral.is_valid('')
+        expected = False
+
+        self.assertEqual(result, expected)
+
+    def test_is_valid_incorrect_numeral(self):
+        result = Numeral.is_valid('G')
+        expected = False
+
+        self.assertEqual(result, expected)
+
+
 class TestNumeralFromInt(unittest.TestCase):
     def test_from_int_0_raises_value_error(self):
         with self.assertRaises(ValueError):
