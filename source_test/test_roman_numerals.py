@@ -13,6 +13,14 @@ class TestNumeral(unittest.TestCase):
             _ = Numeral.from_int(0)
 
 
+class TestNumeralMinimalSavingProperty(unittest.TestCase):
+    def test_minimal_saving_2(self):
+        result = Numeral('MXVIIII').minimal_saving
+        expected = 3
+
+        self.assertEqual(result, expected) 
+
+
 class TestNumeralEQ(unittest.TestCase):
     def test_numeral_minimal__eq_true(self):
         result = Numeral('VIIII') == Numeral('IX')

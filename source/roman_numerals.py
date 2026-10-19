@@ -25,6 +25,17 @@ class Numeral:
         self.value = self._calculate_value(self.str)
         self.minimal_str = self._calculate_minimal_numeral(self.value)
 
+    @property
+    def minimal_saving(self) -> int:
+        """
+        A property that returns the difference between the `str` and 
+        `minimal_str` instance attributes.
+
+        Returns:
+            int
+        """
+        return len(self.str) - len(self.minimal_str)
+    
     def __eq__(self, other: Self) -> bool:
         """
         Compares if a numeral is equal to another based upon it's numerical value. 
