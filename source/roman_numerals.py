@@ -193,7 +193,7 @@ class Numeral:
         return f"Numeral('{self.str}')"
 
 
-def print_numeral_details(numeral: Numeral) -> None:
+def print_numeral_details(numeral: Numeral) -> None: # pragma: no cover
     """
     Prints the numeral's full details for useful display / debugging
     """
