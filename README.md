@@ -4,6 +4,8 @@ A Python project to represent and work with Roman Numerals. Just a fun mini-proj
 
 Originally wrote the code as part of my solution to https://projecteuler.net/problem=89
 
+See `main.py` for a usage example.
+
 DEVA SEMPER!
 
 # links
