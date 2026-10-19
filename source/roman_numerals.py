@@ -1,5 +1,7 @@
 from typing import Self
 
+from source.place_values import PlaceValues
+
 
 NUMERALS = { 
     'I': 1, 'i': 1, 
@@ -16,7 +18,6 @@ class Numeral:
     """
     1 to 9,999
     """
-
     def __init__(self, numeral_str : str):
         if not Numeral.is_valid(numeral_str):
             raise ValueError(f"`numeral_str` contains an invalid denomination. '{numeral_str}'")
@@ -104,14 +105,11 @@ class Numeral:
         """
         # Works bellow 10,000 (V with overscore).
         """
-
         number_str = str(value)
-        # print(number_str)
         length = len(number_str)
         
         # 1600 -> [1000, 600, 00, 0]
-        l = [number_str[i].ljust(length-i, '0') for i in range(0, length)]
-        # print(l)
+        l = PlaceValues(value).decompose(as_strings=True)
 
         numeral = ''
         for item in l:
