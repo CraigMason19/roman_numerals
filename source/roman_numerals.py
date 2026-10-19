@@ -169,7 +169,7 @@ class Numeral:
         Displays the numeral using the `str` instance attribute.
 
         Example:
-            n = Numeral("MDCCCXLIX")
+            >>> n = Numeral("MDCCCXLIX")
             >>> str(n)
             "MDCCCXLIX"
 
@@ -183,7 +183,7 @@ class Numeral:
         Displays the numeral using the `str` instance attribute.
 
         Example:
-            n = Numeral("MDCCCXLIX")
+            >>> n = Numeral("MDCCCXLIX")
             >>> repr(n)
             "Numeral('MDCCCXLIX')"
 
