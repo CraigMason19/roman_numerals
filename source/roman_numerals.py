@@ -25,6 +25,27 @@ class Numeral:
         self.value = self._calculate_value(self.str)
         self.minimal_str = self._calculate_minimal_numeral(self.value)
 
+    def __eq__(self, other: Self) -> bool:
+        """
+        Compares if a numeral is equal to another based upon it's numerical value. 
+        This allows you to compare numeral strings with numeral minimal strings. 
+
+        Example:
+            >>> Numeral('VIIII') == Numeral('IX') == Numeral.from_int(9)
+            True
+
+        Args:
+            other (Numeral):
+                Another Numeral object to compare
+
+        Returns:
+            bool
+        """
+        if not isinstance(other, Numeral):
+            return NotImplemented
+
+        return self.value == other.value
+    
     @staticmethod
     def is_valid(numeral_str : str) -> bool:
         if numeral_str == "":
@@ -152,18 +173,10 @@ def print_numeral_details(numeral: Numeral) -> None:
     Prints the numeral's ful
     """
     print(numeral)
-    print(numeral.str)
-    print(numeral.value)
-    print(numeral.minimal_str)
-    print(Numeral.uses_subtractive_pair_rule(numeral.str))
+    print(f"\tstr -> {numeral.str}")
+    print(f"\tvalue -> {numeral.value}")
+    print(f"\tminimal_str -> {numeral.minimal_str}")
+    print(f"\tuses_subtractive_pair_rule -> {numeral.uses_subtractive_pair_rule(numeral.str)}")
 
 
-numerals = [
-    "MMDCCLXXXVIIII",
-]
 
-# print_numeral_details(Numeral('MMMMCCCXLIV'))
-# print()
-# print_numeral_details(Numeral.from_int(0))
-# print_numeral_details(Numeral.from_int(9999))
-# print_numeral_details(Numeral.from_int(10_000))
