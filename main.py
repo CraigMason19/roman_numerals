@@ -3,16 +3,16 @@ from random import choice
 
 from source.roman_numerals import Numeral, print_numeral_details
 
-NUMERAL_FILE = "\\resources\\1000_unminimalised_roman_numerals.txt"
+
+NUMERAL_FILE = os.path.dirname(__file__) + "\\resources\\1000_unminimalised_roman_numerals.txt"
+
 
 def random_numerals(count: int) -> None:
     """
     Loads numeral strings from a file, then chooses `count` many random numerals
     to display. 
     """
-    numeral_filename = os.path.dirname(__file__) + NUMERAL_FILE
-
-    with open(numeral_filename) as f:
+    with open(NUMERAL_FILE) as f:
         lines = f.read().splitlines()
 
     random_numerals = [choice(lines) for _ in range(count)]
