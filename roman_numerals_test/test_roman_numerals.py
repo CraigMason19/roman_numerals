@@ -1,6 +1,6 @@
 import unittest
 
-from source.roman_numerals import Numeral, NUMERALS
+from roman_numerals.roman_numerals import Numeral, NUMERALS
 
 
 class TestNumeral(unittest.TestCase):

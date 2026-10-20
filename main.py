@@ -1,7 +1,7 @@
 import os
 from random import choice
 
-from source.roman_numerals import Numeral, print_numeral_details
+from roman_numerals.roman_numerals import Numeral, print_numeral_details
 
 
 NUMERAL_FILE = os.path.dirname(__file__) + "\\resources\\1000_unminimalised_roman_numerals.txt"

@@ -5,3 +5,6 @@ source/__pycache__/
 playground.py
 euler_89.py
 source_test/test_euler_89.py
+roman_numerals_test/__pycache__/
+roman_numerals/__pycache__/
+roman_numerals_test/test_euler_89.py

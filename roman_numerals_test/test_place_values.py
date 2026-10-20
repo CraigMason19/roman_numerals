@@ -1,6 +1,6 @@
 import unittest
 
-from source.place_values import PlaceValues
+from roman_numerals.place_values import PlaceValues
 
 
 class TestPlaceValuesConstruction(unittest.TestCase):
