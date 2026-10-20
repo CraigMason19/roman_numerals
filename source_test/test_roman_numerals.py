@@ -67,6 +67,10 @@ class TestNumeralIsValid(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
+class TestNumeralUsesSubtractivePairRule(unittest.TestCase):
+    pass
+
+
 class TestNumeralFromInt(unittest.TestCase):
     def test_from_int_0_raises_value_error(self):
         with self.assertRaises(ValueError):
@@ -75,6 +79,13 @@ class TestNumeralFromInt(unittest.TestCase):
     # print_numeral_details(Numeral.from_int(9999))
     # print_numeral_details(Numeral.from_int(10_000))
 
+
+class TestNumeralCalculateMinimalNumeral(unittest.TestCase):
+    pass
+
+
+class TestNumeralCalculateValue(unittest.TestCase):
+    pass
 
 
 class TestNumeralStringRepresentation(unittest.TestCase):
