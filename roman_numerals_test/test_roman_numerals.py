@@ -1,6 +1,6 @@
 import unittest
 
-from roman_numerals.roman_numerals import Numeral, NUMERALS
+from roman_numerals.roman_numerals import Numeral, NUMERAL_LOOKUP
 
 
 class TestNumeral(unittest.TestCase):
@@ -79,6 +79,12 @@ class TestNumeralFromInt(unittest.TestCase):
     # print_numeral_details(Numeral.from_int(9999))
     # print_numeral_details(Numeral.from_int(10_000))
 
+    def test_from_int_uses_minimal_form_true(self):
+        result = str(Numeral.from_int(14))
+        expected = "XIV"
+
+        self.assertEqual(result, expected)
+
 
 class TestNumeralCalculateMinimalNumeral(unittest.TestCase):
     pass
@@ -97,6 +103,6 @@ class TestNumeralStringRepresentation(unittest.TestCase):
 
     def test_numeral_repr(self):
         result = repr(Numeral.from_int(1867))
-        expected = "Numeral('MDCCCLXVII')"
+        expected = 'Numeral("MDCCCLXVII")'
 
         self.assertEqual(result, expected)
