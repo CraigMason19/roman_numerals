@@ -2,7 +2,12 @@
 place_values.py
 ---------------
 
+Provides tools for decomposing positive integers into their individual 
+place-value components.
 
+Classes:
+    PlaceValues: 
+        Represents an integer through its place values.
 """
 
 from dataclasses import dataclass
@@ -30,7 +35,7 @@ class PlaceValues:
     Attributes:
         number (int): 
             The integer to decompose into place-value digits.
-            
+
     Properties:
         thousands (int): 
             The thousands digit.
