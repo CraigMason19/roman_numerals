@@ -10,10 +10,9 @@ from dataclasses import dataclass
 @dataclass
 class PlaceValues:
     """
-    Represent the digits of an integer by their place values.
+    Represent the digits of an non-negative integer by their place values.
 
-    Extracts the thousands, hundreds, tens, and units digits
-    from a given integer.
+    Numbers are split into thousand, hundred, ten, and unit digits.
 
     Example:
         >>> value = PlaceValues(1600)
@@ -25,29 +24,35 @@ class PlaceValues:
         0
         >>> value.units
         0
+        >>> value.decompose()
+        [1000, 600, 0, 0]
 
     Attributes:
         number (int): 
             The integer to decompose into place-value digits.
+        thousands (int): 
+            The thousands digit.
+        hundreds (int): 
+            The hundreds digit.
+        tens (int): 
+            The tens digit.
+        units (int): 
+            The units digit.
     """
     number: int
 
-    def __init__(self, number):
+    def __post_init__(self):
         """
-        Protects against negative number construction.
+        Validates the number after initialization. 
 
-        Args:
-            number (int):
-                A positive integer of the number to represent.
+        A number is valid if it is NOT negative.
 
         Raises:
             ValueError:
                 If `number` is negative.
         """
-        if number < 0:
-            raise ValueError(f"`number` must be a positive integer: '{number}'")
-
-        self.number = number
+        if self.number < 0:
+            raise ValueError(f"`number` must not be negative: '{self.number}'")
 
     @property
     def thousands(self) -> int:
