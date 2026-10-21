@@ -30,6 +30,8 @@ class PlaceValues:
     Attributes:
         number (int): 
             The integer to decompose into place-value digits.
+            
+    Properties:
         thousands (int): 
             The thousands digit.
         hundreds (int): 
