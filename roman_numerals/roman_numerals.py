@@ -8,6 +8,9 @@ Globals:
     NUMERAL_LOOKUP (dict[str, int]):
         A dictionary mapping Roman numeral characters (uppercase and lowercase) 
         to their corresponding numeric values.
+    SUBTRACTIVE_PAIRS (list[str]):
+        A list of all valid TODO
+
 
 Classes:
     Numeral: 
@@ -24,13 +27,21 @@ from roman_numerals.place_values import PlaceValues
 
 
 NUMERAL_LOOKUP = { 
-    'I': 1, 'i': 1, 
-    'V':5, 'v':5,
-    'X':10, 'x':10,
-    'L':50, 'l':50, 
-    'C':100, 'c':100,
-    'D':500, 'd':500,
-    'M':1000, 'm':1000,
+    'I': 1,    'i': 1, 
+    'V': 5,    'v': 5,
+    'X': 10,   'x': 10,
+    'L': 50,   'l': 50, 
+    'C': 100,  'c': 100,
+    'D': 500,  'd': 500,
+    'M': 1000, 'm': 1000,
+}
+
+SUBTRACTIVE_PAIRS_LOOKUP = {
+    "IV": 5,   "iv": 5, 
+    "IX": 9,   "ix": 9,
+    "XL": 40,  "xl": 40, 
+    "XC": 90,  "xc": 90, 
+    "CD": 400, "cd": 400,
 }
 
 
@@ -121,6 +132,7 @@ class Numeral:
     @staticmethod
     def is_valid(numeral_str : str) -> bool:
         """
+        TODO
         """
         if numeral_str == "":
             return False
