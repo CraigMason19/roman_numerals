@@ -31,8 +31,7 @@ def contains_only_numerals(s: str) -> bool:
         False
 
     Args:
-        text (str):
-            The string to check.
+        s (str):
 
     Returns:
         bool:
@@ -53,7 +52,7 @@ def is_mixed_case(s: str) -> bool:
 
     Args:
         s (str):
-        
+
     Returns:
         bool
     """
@@ -128,19 +127,18 @@ def validate_numeral(s: str) -> None:
 
 
 
-def is_valid(text: str) -> bool:
+def is_valid(s: str) -> bool:
     """
     Determines is a string is a valid roman numeral.
 
     Args:
-        text (str):
-            A potential string to check.
+        s (str):
 
     Returns:
         bool
     """
     try:
-        validate_numeral(text)
+        validate_numeral(s)
         return True
     
     except ValueError:
