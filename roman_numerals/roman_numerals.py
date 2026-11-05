@@ -42,6 +42,7 @@ SUBTRACTIVE_PAIRS_LOOKUP = {
     "XL": 40,  "xl": 40, 
     "XC": 90,  "xc": 90, 
     "CD": 400, "cd": 400,
+    "CM": 900, "cm": 900,
 }
 
 
