@@ -1,8 +1,6 @@
 
 from typing import Counter
 
-
-
 NUMERAL_LOOKUP = { 
     'I': 1,    'i': 1, 
     'V': 5,    'v': 5,
@@ -23,8 +21,6 @@ SUBTRACTIVE_PAIRS_LOOKUP = {
 }
 
 COMBINED_LOOKUP = NUMERAL_LOOKUP | SUBTRACTIVE_PAIRS_LOOKUP
-
- 
 
 
 def contains_only_numerals(s: str) -> bool:
@@ -48,7 +44,6 @@ def contains_only_numerals(s: str) -> bool:
     """
     return all(_ in NUMERAL_LOOKUP for _ in s)
 
-
 def is_mixed_case(s: str) -> bool:
     """
     Returns `True` if a string uses lower and upper case characters, `False` 
@@ -67,10 +62,6 @@ def is_mixed_case(s: str) -> bool:
         bool
     """
     return s.islower() is False and s.isupper() is False and s.lower() != s.upper()
-
-
-
-    
 
 def tokenize(numeral_str: str) -> list[str]:
     """
@@ -122,7 +113,9 @@ def tokenize(numeral_str: str) -> list[str]:
     return [t for t in tokens if t in NUMERAL_LOOKUP | SUBTRACTIVE_PAIRS_LOOKUP]
 
 
-#region rules
+
+
+#region Rules
 
 def _rule_1(tokens: list[str]) -> bool:
     """
@@ -182,13 +175,34 @@ def _rule_3(tokens: list[str]) -> bool:
 
 
 def _rule_4(tokens: list[str]) -> bool:
-    pass
+    """
+    Subtractive pairs can only be used once.
+
+    Examples:
+        >>> _rule_4(['IX', 'IV'])
+        True
+        >>> _rule_4(['IX', 'IX'])
+        False
+
+    Args:
+        tokens (list[str]):
+            The list of tokens returned by the `tokenize` method.
+        
+    Returns:
+        bool    
+    """
+    c = Counter(tokens)
+
+    for _ in c:
+        if (len(_) == 2) and (c[_] != 1):
+            return False    
+
+    return True
 
 #endregion
  
 
-
-
+#region Validation
 
 def validate_numeral(s: str) -> None:
     # Clean the strings
@@ -208,10 +222,10 @@ def validate_numeral(s: str) -> None:
         raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
 
     if not _rule_3(tokens):
-        raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
+        raise ValueError(f"D, L, and V can each only appear once. '{s}'")
 
-
-
+    if not _rule_4(tokens):
+        raise ValueError(f"Subtractive pairs can only be used once. '{s}'")
 
 
 def is_valid(s: str) -> bool:
@@ -230,3 +244,5 @@ def is_valid(s: str) -> bool:
     
     except ValueError:
         return False
+
+#endregion

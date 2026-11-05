@@ -1,6 +1,8 @@
 import unittest
 
 from roman_numerals.validation import (
+    contains_only_numerals,
+    is_mixed_case,
     tokenize,
     _rule_1,
     _rule_2,
@@ -96,6 +98,25 @@ class TestRule3(unittest.TestCase):
             with self.subTest(value=value):
                 self.assertFalse(_rule_3(value))
 
+
+class TestRule4(unittest.TestCase):
+    def test_multiple_different_pairs_true(self):
+        inputs = [
+            ['CM', 'IX', 'IV'],
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(_rule_4(value))
+
+    def test_multiple_same_pairs_false(self):
+        inputs = [
+            ['CM', 'IV', 'IV'],
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertFalse(_rule_4(value))
 
 #endregion
 
