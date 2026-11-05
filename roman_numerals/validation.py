@@ -1,5 +1,8 @@
 
-# TODO frozendict in 3.15, im in 3.14 could use set???
+from typing import Counter
+
+
+
 NUMERAL_LOOKUP = { 
     'I': 1,    'i': 1, 
     'V': 5,    'v': 5,
@@ -156,7 +159,26 @@ def _rule_2(tokens: list[str]) -> bool:
 
 
 def _rule_3(tokens: list[str]) -> bool:
-    pass
+    """
+    D, L, and V can each only appear once.
+
+    Examples:
+        >>> _rule_3(['X', 'V', 'I', 'V'])
+        False
+
+    Args:
+        tokens (list[str]):
+            The list of tokens returned by the `tokenize` method.
+        
+    Returns:
+        bool    
+    """
+    c = Counter(tokens)
+
+    if (c['D'] > 1) or (c['L'] > 1) or (c['V'] > 1):
+        return False
+    
+    return True
 
 
 def _rule_4(tokens: list[str]) -> bool:
@@ -185,6 +207,8 @@ def validate_numeral(s: str) -> None:
     if not _rule_1(tokens):
         raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
 
+    if not _rule_3(tokens):
+        raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
 
 
 

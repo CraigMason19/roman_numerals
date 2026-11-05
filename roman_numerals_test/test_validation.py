@@ -3,6 +3,9 @@ import unittest
 from roman_numerals.validation import (
     tokenize,
     _rule_1,
+    _rule_2,
+    _rule_3,
+    _rule_4,
     validate_numeral,
     is_valid,
 )
@@ -31,6 +34,8 @@ class TestValidation(unittest.TestCase):
             validate_numeral("IXX")  
 
 
+# region Rules
+
 class TestRule1(unittest.TestCase):
     def test_same_next_to_passes(self):
         result = _rule_1(['IX', 'IX'])
@@ -53,6 +58,46 @@ class TestRule1(unittest.TestCase):
         self.assertFalse(result)
 
 
+
+
+
+
+class TestRule3(unittest.TestCase):
+    def test_no_numeral_true(self):
+        inputs = [
+            ['II'],
+            ['II'],
+            ['II'],
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(_rule_3(value))
+
+    def test_one_numeral_true(self):
+        inputs = [
+            ['D'],
+            ['L'],
+            ['V'],
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(_rule_3(value))
+
+    def test_more_than_one_numeral_false(self):
+        inputs = [
+            ['D', 'D'],
+            ['L', 'L'],
+            ['V', 'V'],
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertFalse(_rule_3(value))
+
+
+#endregion
 
 
 # class TestIsValid(unittest.TestCase):
