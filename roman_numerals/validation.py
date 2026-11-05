@@ -1,3 +1,5 @@
+
+# TODO frozendict in 3.15, im in 3.14 could use set???
 NUMERAL_LOOKUP = { 
     'I': 1,    'i': 1, 
     'V': 5,    'v': 5,
@@ -14,7 +16,12 @@ SUBTRACTIVE_PAIRS_LOOKUP = {
     "XL": 40,  "xl": 40, 
     "XC": 90,  "xc": 90, 
     "CD": 400, "cd": 400,
+    "CM": 900, "cm": 900,
 }
+
+COMBINED_LOOKUP = NUMERAL_LOOKUP | SUBTRACTIVE_PAIRS_LOOKUP
+
+ 
 
 
 def contains_only_numerals(s: str) -> bool:
@@ -64,11 +71,13 @@ def is_mixed_case(s: str) -> bool:
 
 def tokenize(numeral_str: str) -> list[str]:
     """
+    only valid numerals, 
+    # ['IX', ' ', 'IX', ' ', 'G', ' ', 'V']
+    # ['IX', 'IX', 'V']
+
     Splits a string of numerals into UPPERCASE tokens which are either a numeral, or a pair of subtractive numerals.
 
-    Args:
-        numeral_str (str):
-            A string containing ONLY roman numerals.
+    DOESN'T check for validity. For Example, "IXIX" becomes ["IX", "IX"]
 
     Examples:
         >>> tokenize("IXX")
@@ -83,33 +92,84 @@ def tokenize(numeral_str: str) -> list[str]:
         >>> tokenize("XIXIX")
         ['X', 'IX', 'IX']
 
+    Args:
+        numeral_str (str):
+            A string containing ONLY roman numerals.
+
     Returns:
         list[str]:
             A list of uppercase tokens.
     """
     line = numeral_str.upper() # So we don't have 'iX' for example
-    parts = []
+    tokens = []
     
     while len(line) > 0:
         if line[0:2] in SUBTRACTIVE_PAIRS_LOOKUP:
-            parts.append(line[0:2])
+            tokens.append(line[0:2])
             line = line[2:]
 
         elif line[0] in NUMERAL_LOOKUP:
-            parts.append(line[0])
+            tokens.append(line[0])
             line = line[1:]
 
-    return parts
+        else:
+            tokens.append(line[0])
+            line = line[1:]
+
+    return [t for t in tokens if t in NUMERAL_LOOKUP | SUBTRACTIVE_PAIRS_LOOKUP]
 
 
+#region rules
+
+def _rule_1(tokens: list[str]) -> bool:
+    """
+    Numerals must be arranged in descending order of size.
+
+    Examples:
+        >>> _rule_1(['IV', 'I'])
+        True
+        >>> _rule_1(['IX', 'X'])
+        False
+    
+    Args:
+        tokens (list[str]):
+            The list of tokens returned by the `tokenize` method.
+        
+    Returns:
+        bool    
+    """
+    if len(tokens) == 0:
+        return False
+
+    if len(tokens) == 1:
+        return True
+
+    for i in range(len(tokens)-1):
+        if COMBINED_LOOKUP[tokens[i]] < COMBINED_LOOKUP[tokens[i+1]]:
+            return False        
+
+    return True
 
 
+def _rule_2(tokens: list[str]) -> bool:
+    pass
+
+
+def _rule_3(tokens: list[str]) -> bool:
+    pass
+
+
+def _rule_4(tokens: list[str]) -> bool:
+    pass
+
+#endregion
  
 
 
 
 
 def validate_numeral(s: str) -> None:
+    # Clean the strings
     if s == "":
         raise ValueError(f"Numeral string is empty: '{s}'")
 
@@ -119,9 +179,12 @@ def validate_numeral(s: str) -> None:
     if is_mixed_case(s):
         raise ValueError(f"Numerals must be of the same case: '{s}'")
 
+    # Now string is clean, we can split it tokens and check for the 4 rules.
+    tokens = tokenize(s)
 
+    if not _rule_1(tokens):
+        raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
 
-    # etc.......
 
 
 

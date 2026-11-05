@@ -1,6 +1,8 @@
 import unittest
 
 from roman_numerals.validation import (
+    tokenize,
+    _rule_1,
     validate_numeral,
     is_valid,
 )
@@ -24,6 +26,31 @@ class TestValidation(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_numeral("Vi")
 
+    def test_rule_1_is_applied(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("IXX")  
+
+
+class TestRule1(unittest.TestCase):
+    def test_same_next_to_passes(self):
+        result = _rule_1(['IX', 'IX'])
+
+        self.assertTrue(result)
+
+    def test_lower_next_to_passes(self):
+        result = _rule_1(['IX', 'i'])
+
+        self.assertTrue(result)
+
+    def test_higher_next_to_subtractive_pair_fails(self):
+        result = _rule_1(['IX', 'X'])
+
+        self.assertFalse(result)
+
+    def test_higher_subtractive_pair_next_to_fails(self):
+        result = _rule_1(['I', 'IX'])
+
+        self.assertFalse(result)
 
 
 
