@@ -1,6 +1,6 @@
 import unittest
 
-from roman_numerals.roman_numerals import Numeral, NUMERAL_LOOKUP
+from roman_numerals.roman_numerals import Numeral, NUMERAL_VALUE_LOOKUP
 
 
 class TestNumeral(unittest.TestCase):
