@@ -1,6 +1,6 @@
 """
 roman_numerals.py
----------------
+-----------------
 
 Provides tools for constructing / displaying Roman numerals.
 
