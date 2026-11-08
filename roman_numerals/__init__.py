@@ -6,10 +6,12 @@ Provides tools & utilities for working with Roman numerals.
 
 Modules:
     place_values:
-        Defines the `PlaceValues` helper for decomposing integers by place value.
+        Defines the `PlaceValues` helper class for decomposing integers by place 
+        value.
 
     roman_numerals:
-        Defines the tools for creating and displaying Roman numerals.
+        Defines the tools for creating and displaying Roman numerals. Defines 
+        the `Numeral` class.
 
     validation:
         Defines the tools for validating Roman numeral strings.
