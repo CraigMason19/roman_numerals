@@ -220,6 +220,12 @@ class Numeral:
 
         return total + int(NUMERAL_VALUE_LOOKUP[numeral_str[-1:]])
 
+    def pretty_print(self) -> None: # pragma: no cover
+        """
+        Conveniently calls `print_numeral_details` on the Numeral.
+        """
+        print_numeral_details(self)
+
     def __str__(self) -> str:
         """
         Displays the numeral using the `str` instance attribute.
