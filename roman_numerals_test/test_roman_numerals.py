@@ -6,7 +6,11 @@ from roman_numerals.roman_numerals import Numeral, NUMERAL_VALUE_LOOKUP
 class TestNumeral(unittest.TestCase):
     def test_empty_string_raises_value_error(self):
         with self.assertRaises(ValueError):
-            _ = Numeral("0")
+            _ = Numeral("")
+
+    def test_invalid_string_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            _ = Numeral("Inv") 
 
     def test_0_raises_value_error(self):
         with self.assertRaises(ValueError):
@@ -68,7 +72,15 @@ class TestNumeralIsValid(unittest.TestCase):
 
 
 class TestNumeralUsesSubtractivePairRule(unittest.TestCase):
-    pass
+    def test_subtractive_pair_true(self):
+        result = Numeral.uses_subtractive_pair_rule('XIX')
+
+        self.assertTrue(result)
+
+    def test_subtractive_pair_false(self):
+        result = Numeral.uses_subtractive_pair_rule('XVI')
+
+        self.assertFalse(result)
 
 
 class TestNumeralFromInt(unittest.TestCase):
@@ -87,11 +99,31 @@ class TestNumeralFromInt(unittest.TestCase):
 
 
 class TestNumeralCalculateMinimalNumeral(unittest.TestCase):
-    pass
+    def test_calculate_minimal_numeral_14(self):
+        result = Numeral._calculate_minimal_numeral(14)
+        expected = "XIV"
+
+        self.assertEqual(result, expected)
+
+    def test_valid_to_minial_numeral_saving(self):
+        result = Numeral('MXVIIII').minimal_saving
+        expected = 3
+
+        self.assertEqual(result, expected)
 
 
 class TestNumeralCalculateValue(unittest.TestCase):
-    pass
+    def test_additive_value(self):
+        result = Numeral._calculate_value('XVI')
+        expected = 16
+
+        self.assertEqual(result, expected)
+
+    def test_subtractive_value(self):
+        result = Numeral._calculate_value('XIV')
+        expected = 14
+
+        self.assertEqual(result, expected)
 
 
 class TestNumeralStringRepresentation(unittest.TestCase):

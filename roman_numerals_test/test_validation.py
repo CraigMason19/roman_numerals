@@ -59,7 +59,7 @@ class TestMixedCase(unittest.TestCase):
 
         for value in inputs:
             with self.subTest(value=value):
-                self.assertFalse(contains_only_numerals(value))
+                self.assertFalse(is_mixed_case(value))
 
 
 class TestTokenize(unittest.TestCase):
