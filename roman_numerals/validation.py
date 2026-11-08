@@ -85,13 +85,10 @@ def is_mixed_case(s: str) -> bool:
 
 def tokenize(numeral_str: str) -> list[str]:
     """
-    only valid numerals, 
-    # ['IX', ' ', 'IX', ' ', 'G', ' ', 'V']
-    # ['IX', 'IX', 'V']
+    Splits a string of numerals into UPPERCASE tokens which are either a numeral, or
+    a pair of subtractive numerals, anything else is discarded.
 
-    Splits a string of numerals into UPPERCASE tokens which are either a numeral, or a pair of subtractive numerals.
-
-    DOESN'T check for validity. For Example, "IXIX" becomes ["IX", "IX"]
+    DOESN'T check for validity. For Example, "IXIX" becomes ["IX", "IX"].
 
     Examples:
         >>> tokenize("IXX")
@@ -106,9 +103,12 @@ def tokenize(numeral_str: str) -> list[str]:
         >>> tokenize("XIXIX")
         ['X', 'IX', 'IX']
 
+        >>> tokenize("m.dc.xi")
+        ['M', 'D', 'C', 'X', 'I']
+
     Args:
         numeral_str (str):
-            A string containing ONLY roman numerals.
+            The string to split into numerals
 
     Returns:
         list[str]:
@@ -257,17 +257,19 @@ def validate_numeral(s: str) -> None:
     # Now string is clean, we can split it tokens and check for the 4 rules.
     tokens = tokenize(s)
 
-    if not _rule_1(tokens):
-        raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
-
-    if not _rule_2(tokens):
-        raise ValueError(f"M, C, and X cannot be equalled or exceeded by smaller denominations.. '{s}'")   
-
+    # Project Euler defined these rules, i have changed the order so they are 
+    # applied in a fail-first style.
     if not _rule_3(tokens):
         raise ValueError(f"D, L, and V can each only appear once. '{s}'")
 
     if not _rule_4(tokens):
         raise ValueError(f"Subtractive pairs can only be used once. '{s}'")
+
+    if not _rule_1(tokens):
+        raise ValueError(f"Numerals must be arranged in descending order of size. '{s}'")
+    
+    if not _rule_2(tokens):
+        raise ValueError(f"M, C, and X cannot be equalled or exceeded by smaller denominations.. '{s}'")   
 
 
 def is_valid(s: str) -> bool:
