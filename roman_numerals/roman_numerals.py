@@ -2,15 +2,15 @@
 roman_numerals.py
 -----------------
 
-Provides tools for constructing / displaying Roman numerals.
+Provides tools for constructing and displaying Roman numerals.
 
 Classes:
-    Numeral: 
-        Represents an Roman numeral.
+    Numeral:
+        Represents a Roman numeral between 1 and 9,999 inclusive.
 
 Functions:
     print_numeral_details:
-        Conveniently display a Numeral and all its various properties.
+        Prints a numeral and its associated properties in a readable format.
 """
 
 from typing import Self
@@ -21,7 +21,7 @@ from roman_numerals.validation import NUMERAL_VALUE_LOOKUP, SUBTRACTIVE_PAIRS_VA
 
 class Numeral:
     """
-    Represents a Roman numeral in between 1 -> 9,999 (inclusive).
+    Represents a Roman numeral in the range 1 to 9,999 inclusive.
 
     Example:
         >>> n = Numeral("XIIII")
@@ -41,32 +41,32 @@ class Numeral:
 
     Attributes:
         str (str):
-            The original str passed to the Numeral's constructor.
+            The original string passed to the constructor.
         value (int):
-            The numerical value of the Numeral.
+            The integer value represented by the numeral.
         minimal_str (str):
-            The Numeral expressed in it's minimal form.
+            The numeral expressed in its shortest valid form.
 
     Properties:
         minimal_saving (int):
-            The difference between `str` & `minimal_str`.
+            The number of characters saved by converting `str` to `minimal_str`.
     """
 
-    def __init__(self, numeral_str : str):
+    def __init__(self, numeral_str: str):
         """
-        Constructs a Numeral class is the `numeral_str` is a valid numeral string.
+        Create a `Numeral` from a valid Roman numeral string.
 
         Args:
             numeral_str (str):
-                The string to try to make a Numeral from.
+                The Roman numeral string to validate and parse.
 
         Raises:
             ValueError:
-                If the Numeral is invalid. As determined by the `is_valid` method.
+                If the supplied string is not a valid numeral.
         """
         if not Numeral.is_valid(numeral_str):
             raise ValueError(f"`numeral_str` contains an invalid denomination. '{numeral_str}'")
-        
+
         self.str = numeral_str.upper()
         self.value = self._calculate_value(self.str)
         self.minimal_str = self._calculate_minimal_numeral(self.value)
@@ -74,18 +74,19 @@ class Numeral:
     @property
     def minimal_saving(self) -> int:
         """
-        A property that returns the difference between the `str` and 
-        `minimal_str` instance attributes.
+        Return the difference in length between the original string and its minimal form.
 
         Returns:
             int
         """
         return len(self.str) - len(self.minimal_str)
-    
+
     def __eq__(self, other: Self) -> bool:
         """
-        Compares if a numeral is equal to another based upon it's numerical value. 
-        This allows you to compare numeral `str` and `minimal_str`. 
+        Compare two numerals by their numeric value.
+
+        This also allows direct comparisons between a numeral's original form and
+        its minimal representation.
 
         Example:
             >>> Numeral("VIIII") == Numeral("IX") == Numeral.from_int(9)
@@ -93,7 +94,7 @@ class Numeral:
 
         Args:
             other (Numeral):
-                Another Numeral object to compare
+                Another `Numeral` instance to compare against.
 
         Returns:
             bool
@@ -102,23 +103,29 @@ class Numeral:
             return NotImplemented
 
         return self.value == other.value
-    
+
     @staticmethod
-    def is_valid(text : str) -> bool:
+    def is_valid(text: str) -> bool:
         """
-        TODO
+        Return whether the provided text is a valid Roman numeral.
+
+        Args:
+            text (str):
+                The string to validate.
+
+        Returns:
+            bool:
         """
         return is_valid(text)
 
     @staticmethod
-    def uses_subtractive_pair_rule(numeral_str : str) -> bool:
+    def uses_subtractive_pair_rule(numeral_str: str) -> bool:
         """
-        Determines whether the subtractive rule is used.
-        
-        Loops over the `numeral_str` as sub-strings of two and checks whether the are
-        in `SUBTRACTIVE_PAIRS_VALUE_LOOKUP`. 
-        
-        If one sub-string is returns True, False otherwise.
+        Determine whether the numeral uses a subtractive pair rule.
+
+        The method inspects adjacent characters and checks whether a smaller value
+        appears before a larger one, which indicates a subtractive notation such
+        as `IV` or `IX`.
 
         Example:
             >>> Numeral.uses_subtractive_pair_rule("XIX")
@@ -130,24 +137,23 @@ class Numeral:
         for i in range(1, len(numeral_str)):
             if NUMERAL_VALUE_LOOKUP[numeral_str[i]] > NUMERAL_VALUE_LOOKUP[numeral_str[i-1]]:
                 return True
-            
+
         return False
-    
+
     @staticmethod
     def from_int(n: int) -> Self:
         """
-        Creates a Roman numeral from a number. 
-        
-        - Limit is 1 -> 9,999 (inclusive). 0 had no a Roman numeral.
-        - Numerals created this way will use the minimal form of the numeral
+        Create a Roman numeral from a positive integer.
+
+        The result is always expressed in its minimal valid form.
 
         Args:
-            n (int): 
+            n (int):
                 A positive integer to convert.
 
         Raises:
             ValueError:
-                If `n` isn't a positive integer. 
+                If `n` is not a positive integer.
         """
         if n < 1:
             raise ValueError(f"`n` must be a positive integer: {n}")
@@ -155,15 +161,26 @@ class Numeral:
         minimal_str = Numeral._calculate_minimal_numeral(n)
         return Numeral(minimal_str)
 
-
     @staticmethod
-    def _calculate_minimal_numeral(value) -> str:
+    def _calculate_minimal_numeral(value: int) -> str:
         """
-        # Works bellow 10,000 (V with overscore).
+        Compute the minimal Roman numeral representation for an integer below 10,000.
+        
+        Example:
+            >>> Numeral._calculate_minimal_numeral(14)
+            "XIV"
+
+        Args:
+            value:
+                The integer to represent as a Roman numeral.
+
+        Returns:
+            str: 
+                The minimal Roman numeral representation of the integer.
         """
         number_str = str(value)
         length = len(number_str)
-        
+
         # 1600 -> [1000, 600, 00, 0]
         l = PlaceValues(value).decompose(as_strings=True)
 
@@ -187,29 +204,44 @@ class Numeral:
                 if n == 1:
                     numeral += small
                 if n == 2:
-                    numeral += small+small
+                    numeral += small + small
                 if n == 3:
-                    numeral += small+small+small
+                    numeral += small + small + small
                 if n == 4:
-                    numeral += small+mid
+                    numeral += small + mid
                 if n == 5:
                     numeral += mid
                 if n == 6:
-                    numeral += mid+small
+                    numeral += mid + small
                 if n == 7:
-                    numeral += mid+small+small
+                    numeral += mid + small + small
                 if n == 8:
-                    numeral += mid+small+small+small
+                    numeral += mid + small + small + small
                 if n == 9:
-                    numeral += small+big
+                    numeral += small + big
 
         return numeral
 
     @staticmethod
     def _calculate_value(numeral_str: str) -> int:
+        """
+        Compute the integer value of a Roman numeral string.
+        
+        Example:
+            >>> Numeral._calculate_value("XIV") 
+            14
+
+        Args:
+            numeral_str (str):
+                The Roman numeral string to evaluate.
+
+        Returns:
+            int:
+                The integer value of the numeral.        
+        """
         if Numeral.uses_subtractive_pair_rule(numeral_str) == False:
             return sum(NUMERAL_VALUE_LOOKUP[c] for c in numeral_str)
-        
+
         else:
             total = 0
             for i in range(0, len(numeral_str)-1):
@@ -222,13 +254,13 @@ class Numeral:
 
     def pretty_print(self) -> None: # pragma: no cover
         """
-        Conveniently calls `print_numeral_details` on the Numeral.
+        Print the numeral and its details using `print_numeral_details`.
         """
         print_numeral_details(self)
 
     def __str__(self) -> str:
         """
-        Displays the numeral using the `str` instance attribute.
+        Return the numeral using the original string representation.
 
         Example:
             >>> n = Numeral("MDCCCXLIX")
@@ -236,13 +268,14 @@ class Numeral:
             "MDCCCXLIX"
 
         Returns:
-            str
+            str: 
+                The original numeral string.
         """
         return f"{self.str}"
-    
+
     def __repr__(self) -> str:
         """
-        Displays the numeral using the `str` instance attribute.
+        Return a developer-friendly representation of the numeral.
 
         Example:
             >>> n = Numeral("MDCCCXLIX")
@@ -250,14 +283,15 @@ class Numeral:
             "Numeral('MDCCCXLIX')"
 
         Returns:
-            str
+            str: 
+                The numeral's representation.
         """
         return f'Numeral("{self.str}")'
 
 
 def print_numeral_details(numeral: Numeral) -> None: # pragma: no cover
     """
-    Prints the numeral's full details for useful display / debugging
+    Print the numeral and each of its key properties for display or debugging.
 
     Example:
         >>> print_numeral_details(Numeral("XIIII"))
@@ -270,7 +304,7 @@ def print_numeral_details(numeral: Numeral) -> None: # pragma: no cover
 
     Args:
         numeral (Numeral):
-            The Numeral you wish to display.
+            The Numeral to display.
     """
     print(repr(numeral))
     print(f'\tstr -> "{numeral.str}"')
