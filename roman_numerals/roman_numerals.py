@@ -113,9 +113,9 @@ class Numeral:
     @staticmethod
     def uses_subtractive_pair_rule(numeral_str : str) -> bool:
         """
-        Determines wheter the subtractive rule is used.
+        Determines whether the subtractive rule is used.
         
-        Loops over the `numeral_str` as sub-strings of two and checks wheter the are
+        Loops over the `numeral_str` as sub-strings of two and checks whether the are
         in `SUBTRACTIVE_PAIRS_VALUE_LOOKUP`. 
         
         If one sub-string is returns True, False otherwise.
