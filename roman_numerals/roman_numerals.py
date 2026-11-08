@@ -4,14 +4,6 @@ roman_numerals.py
 
 Provides tools for constructing / displaying Roman numerals.
 
-Globals:
-    NUMERAL_LOOKUP (dict[str, int]):
-        A dictionary mapping Roman numeral characters (uppercase and lowercase) 
-        to their corresponding numeric values.
-    SUBTRACTIVE_PAIRS (list[str]):
-        A list of all valid TODO
-
-
 Classes:
     Numeral: 
         Represents an Roman numeral.
@@ -24,7 +16,7 @@ Functions:
 from typing import Self
 
 from roman_numerals.place_values import PlaceValues
-from roman_numerals.validation import NUMERAL_LOOKUP, SUBTRACTIVE_PAIRS_LOOKUP, is_valid
+from roman_numerals.validation import NUMERAL_VALUE_LOOKUP, SUBTRACTIVE_PAIRS_VALUE_LOOKUP, is_valid
 
 
 class Numeral:
@@ -129,7 +121,7 @@ class Numeral:
             bool
         """
         for i in range(1, len(numeral_str)):
-            if NUMERAL_LOOKUP[numeral_str[i]] > NUMERAL_LOOKUP[numeral_str[i-1]]:
+            if NUMERAL_VALUE_LOOKUP[numeral_str[i]] > NUMERAL_VALUE_LOOKUP[numeral_str[i-1]]:
                 return True
             
         return False
@@ -209,17 +201,17 @@ class Numeral:
     @staticmethod
     def _calculate_value(numeral_str: str) -> int:
         if Numeral.uses_subtractive_pair_rule(numeral_str) == False:
-            return sum(NUMERAL_LOOKUP[c] for c in numeral_str)
+            return sum(NUMERAL_VALUE_LOOKUP[c] for c in numeral_str)
         
         else:
             total = 0
             for i in range(0, len(numeral_str)-1):
-                if NUMERAL_LOOKUP[numeral_str[i]] < NUMERAL_LOOKUP[numeral_str[i+1]]:
-                    total -= NUMERAL_LOOKUP[numeral_str[i]]
+                if NUMERAL_VALUE_LOOKUP[numeral_str[i]] < NUMERAL_VALUE_LOOKUP[numeral_str[i+1]]:
+                    total -= NUMERAL_VALUE_LOOKUP[numeral_str[i]]
                 else:
-                    total += NUMERAL_LOOKUP[numeral_str[i]]
+                    total += NUMERAL_VALUE_LOOKUP[numeral_str[i]]
 
-        return total + int(NUMERAL_LOOKUP[numeral_str[-1:]])
+        return total + int(NUMERAL_VALUE_LOOKUP[numeral_str[-1:]])
 
     def __str__(self) -> str:
         """
