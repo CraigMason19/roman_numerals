@@ -12,28 +12,10 @@ from roman_numerals.validation import (
     is_valid,
 )
 
+#region General
 
 
-class TestValidation(unittest.TestCase):
-    def test_empty_string_raises_value_error(self):
-        with self.assertRaises(ValueError):
-            validate_numeral("")
-
-    def test_spaces_raises_value_error(self):
-        with self.assertRaises(ValueError):
-            validate_numeral("VII I")
-
-    def test_invalid_characters_raises_value_error(self):
-        with self.assertRaises(ValueError):
-            validate_numeral("IK")
-
-    def test_mixed_case_raises_value_error(self):
-        with self.assertRaises(ValueError):
-            validate_numeral("Vi")
-
-    def test_rule_1_is_applied(self):
-        with self.assertRaises(ValueError):
-            validate_numeral("IXX")  
+#endregion
 
 
 # region Rules
@@ -60,8 +42,28 @@ class TestRule1(unittest.TestCase):
         self.assertFalse(result)
 
 
+class TestRule2(unittest.TestCase):
+    pass
+    # # input: str = "IIIIIIIIIIIIIIII"
+    # # input = 'VIIIIIIIIIII'
+    # input = 'XVV' # covere by rule 3. count for v is 2. not value
+    # input = 'X' + ('i'*10) # false
+    # input = 'X' + ('i'*9) # true
 
 
+    # # input = 'MCCCCCCCCCC' # false
+    # # input = 'MCCCCCCCCC' # true
+
+    # tokens = v.tokenize(input)
+    # print(v._rule_2(tokens))
+
+    # def test_foo(self):
+
+    # def test_M_and_C(self):
+    #     true_ = 'MCCCCCCCCCC'
+    #     false_input = 'MCCCCCCCCC'
+
+    #     self.assertTrue
 
 
 class TestRule3(unittest.TestCase):
@@ -121,6 +123,34 @@ class TestRule4(unittest.TestCase):
 #endregion
 
 
+#region Validity
+
+class TestValidateNumeral(unittest.TestCase):
+    def test_empty_string_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("")
+
+    def test_spaces_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("VII I")
+
+    def test_invalid_characters_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("IK")
+
+    def test_mixed_case_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("Vi")
+
+    def test_rule_1_is_applied(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("IXX") 
+
+
+    def test_rule_3_is_applied(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("DDI")      
+
 # class TestIsValid(unittest.TestCase):
 #     def test_empty_string_false(self):
 #         result = is_valid("")
@@ -145,3 +175,83 @@ class TestRule4(unittest.TestCase):
 #         expected = True
 
 #         self.assertEqual(result, expected) 
+
+#endregion
+
+
+#region Euler Note Examples
+
+class Test_16(unittest.TestCase):
+    def test_valid(self):
+        inputs = [
+            "XVI",
+            "XIIIIII",
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(is_valid(value))
+
+    def test_invalid(self):
+        inputs = [
+            "I" * 16,
+            "I" * 10,
+            "VVVI",
+            "VVIIIIII",
+            "VIIIIIIIIIII",
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertFalse(is_valid(value))
+
+
+class Test_49(unittest.TestCase):
+    def test_valid(self):
+        inputs = [
+            "XXXXIIIIIIIII",
+            "XXXXVIIII",
+            "XXXXIX",
+            "XLIIIIIIIII",
+            "XLVIIII",
+            "XLIX",
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(is_valid(value))
+
+    def test_invalid(self):
+        result = is_valid("IL")
+
+        self.assertFalse(result) 
+  
+
+class Test_1606(unittest.TestCase):
+    def test_valid(self):
+        inputs = [
+            "MCCCCCCVI",
+            "MDCVI"
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(is_valid(value))     
+
+
+class Test_verbose(unittest.TestCase):
+    def test_valid(self):
+        inputs = [
+            "IIIII",
+            "V",
+            "XXXXX",
+            "D",
+            "CCCCC",
+            "M"
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(is_valid(value))  
+
+#endregion
