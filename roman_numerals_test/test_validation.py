@@ -14,6 +14,75 @@ from roman_numerals.validation import (
 
 #region General
 
+class TestContainsOnlyNumerals(unittest.TestCase):
+    def test_true_input(self):
+        inputs = [
+            'I',
+            'IVXM',
+            'vixiiiiiii',
+            'XiVMd',
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(contains_only_numerals(value))
+
+    def test_false_input(self):
+        inputs = [
+            'I I',
+            'IK',
+            'V7',
+            'XVI!',
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertFalse(contains_only_numerals(value))
+
+
+class TestMixedCase(unittest.TestCase):
+    def test_true_input(self):
+        inputs = [
+            'Vii',
+            'Hello World',
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertTrue(is_mixed_case(value))
+
+    def test_false_input(self):
+        inputs = [
+            'HELLO',
+            'world123',
+        ]
+
+        for value in inputs:
+            with self.subTest(value=value):
+                self.assertFalse(contains_only_numerals(value))
+
+
+class TestTokenize(unittest.TestCase):
+    def test_duplicate_subtractive_pairs(self):
+        result = tokenize("IXIX")
+        expected = ["IX", "IX"]
+
+        self.assertEqual(result, expected)
+
+    def test_numeral_with_decimals(self):
+        """
+        A common Renaissance style.
+        """
+        result = tokenize("M.DC.XXIII")
+        expected = ['M', 'D', 'C', 'X', 'X', 'I', 'I', 'I']
+
+        self.assertEqual(result, expected)
+
+    def test_numeral_with_spaces(self):
+        result = tokenize("M DC XXIII")
+        expected = ['M', 'D', 'C', 'X', 'X', 'I', 'I', 'I']
+
+        self.assertEqual(result, expected)
 
 #endregion
 
@@ -43,35 +112,32 @@ class TestRule1(unittest.TestCase):
 
 
 class TestRule2(unittest.TestCase):
-    pass
-    # # input: str = "IIIIIIIIIIIIIIII"
-    # # input = 'VIIIIIIIIIII'
-    # input = 'XVV' # covere by rule 3. count for v is 2. not value
-    # input = 'X' + ('i'*10) # false
-    # input = 'X' + ('i'*9) # true
+    def test_too_many_numerals_fails(self):
+            inputs = [
+                "I" * 16,
+                "I" * 10,
+                "M" + ("C" * 10)
+            ]
 
+            for value in inputs:
+                with self.subTest(value=value):
+                    self.assertFalse(_rule_2(value))
 
-    # # input = 'MCCCCCCCCCC' # false
-    # # input = 'MCCCCCCCCC' # true
+    def test_ftoo_many_numerals_fails(self):
+            inputs = [
+                "I" * 9,
+                "M" + ("C" * 9)
+            ]
 
-    # tokens = v.tokenize(input)
-    # print(v._rule_2(tokens))
-
-    # def test_foo(self):
-
-    # def test_M_and_C(self):
-    #     true_ = 'MCCCCCCCCCC'
-    #     false_input = 'MCCCCCCCCC'
-
-    #     self.assertTrue
+            for value in inputs:
+                with self.subTest(value=value):
+                    self.assertTrue(_rule_2(value))
 
 
 class TestRule3(unittest.TestCase):
     def test_no_numeral_true(self):
         inputs = [
-            ['II'],
-            ['II'],
-            ['II'],
+            [''],
         ]
 
         for value in inputs:
@@ -146,35 +212,44 @@ class TestValidateNumeral(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_numeral("IXX") 
 
+    def test_rule_2_is_applied(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("X" + ("I" * 10)) 
 
     def test_rule_3_is_applied(self):
         with self.assertRaises(ValueError):
             validate_numeral("DDI")      
 
-# class TestIsValid(unittest.TestCase):
-#     def test_empty_string_false(self):
-#         result = is_valid("")
-#         expected = False
+    def test_rule_4_is_applied(self):
+        with self.assertRaises(ValueError):
+            validate_numeral("IXIX")    
 
-#         self.assertEqual(result, expected) 
 
-#     def test_lowercase_true(self):
-#         result = is_valid("xcix")
-#         expected = True
+class TestIsValid(unittest.TestCase):
+    def test_empty_string_false(self):
+        result = is_valid("")
 
-#         self.assertEqual(result, expected) 
+        self.assertFalse(result) 
 
-#     def test_uppercase_true(self):
-#         result = is_valid("XCIX")
-#         expected = True
+    def test_lowercase_true(self):
+        result = is_valid("xcix")
 
-#         self.assertEqual(result, expected) 
+        self.assertTrue(result) 
 
-#     def test_mixed_case_false(self):
-#         result = is_valid("XCIX")
-#         expected = True
+    def test_uppercase_true(self):
+        result = is_valid("XCIX")
 
-#         self.assertEqual(result, expected) 
+        self.assertTrue(result) 
+
+    def test_mixed_case_false(self):
+        result = is_valid("XCiX")
+        
+        self.assertFalse(result) 
+
+    def test_numbers_false(self):
+        result = is_valid("X5")
+        
+        self.assertFalse(result) 
 
 #endregion
 
