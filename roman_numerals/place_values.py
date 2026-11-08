@@ -2,22 +2,24 @@
 place_values.py
 ---------------
 
-Provides tools for decomposing positive integers into their individual 
+Provides tools for decomposing positive integers into their individual
 place-value components.
 
 Classes:
-    PlaceValues: 
-        Represents an integer through its place values.
+    PlaceValues:
+        Represents an integer by breaking it into its thousands, hundreds,
+        tens, and units components.
 """
 
 from dataclasses import dataclass
 
+
 @dataclass
 class PlaceValues:
     """
-    Represent the digits of an non-negative integer by their place values.
+    Represent the digits of a non-negative integer by their place values.
 
-    Numbers are split into thousand, hundred, ten, and unit digits.
+    Numbers are split into thousands, hundreds, tens, and units digits.
 
     Example:
         >>> value = PlaceValues(1600)
@@ -33,24 +35,25 @@ class PlaceValues:
         [1000, 600, 0, 0]
 
     Attributes:
-        number (int): 
+        number (int):
             The integer to decompose into place-value digits.
 
     Properties:
-        thousands (int): 
+        thousands (int):
             The thousands digit.
-        hundreds (int): 
+        hundreds (int):
             The hundreds digit.
-        tens (int): 
+        tens (int):
             The tens digit.
-        units (int): 
+        units (int):
             The units digit.
     """
+
     number: int
 
     def __post_init__(self):
         """
-        Validates the number after initialization. 
+        Validate the number after initialization.
 
         A number is valid if it is NOT negative.
 
@@ -91,10 +94,10 @@ class PlaceValues:
 
     def decompose(self, as_strings: bool=False) -> list[int] | list[str]:
         """
-        Breaks the number into component parts such that when added together
-        re-construct the original number. For example,
+        Break the number into its component parts such that, when added together,
+        they reconstruct the original value.
 
-        2609 decomposed becomes [2000, 600, 0, 9]. The sum of which is 2609.
+        For example, 2609 decomposes to [2000, 600, 0, 9].
 
         Example:
             >>> PlaceValues(1600).decompose()
@@ -104,12 +107,12 @@ class PlaceValues:
 
         Args:
             as_strings (bool):
-                Whether or not the method should return ints or strings. This 
-                allows for leading zeros.
+                Whether to return integers or strings. Strings preserve leading
+                zeros where needed.
 
         Returns:
             list[int] | list[str]:
-                Either a list of ints or a list of strings depending on `as_strings`
+                A list of place-value components, either as integers or strings.
         """
         number_str = str(self.number)
         length = len(number_str)
