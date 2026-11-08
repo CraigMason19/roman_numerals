@@ -132,7 +132,7 @@ def tokenize(numeral_str: str) -> list[str]:
         else:
             line = line[1:]
 
-    return [t for t in tokens if t in NUMERAL_VALUE_LOOKUP | SUBTRACTIVE_PAIRS_VALUE_LOOKUP]
+    return tokens
 
 
 #region Rules
