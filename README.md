@@ -25,12 +25,32 @@ NUMERALS = { 'I': 1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000 }
 - Only numbers between 1 and 9,999 inclusive are supported
 - Stores a numeral as a numeral, value & minimal numeral
 
+Examples:
+```python
+>>> from roman_numerals import Numeral
+
+>>> n = Numeral("MCCCCXIX")
+>>> n.pretty_print()
+Numeral("MCCCCXIX")
+	str -> "MCCCCXIX"
+	value -> 1419
+	minimal_str -> "MCDXIX"
+	minimal_saving -> 2
+	uses_subtractive_pair_rule -> True
+
+>>> n = Numeral.from_int(2026)
+>>> print(n)
+MMXXVI
+```
+
 # PlaceValues
 
 Contains a `PlaceValues` class that splits numbers into thousands, hundreds, tens & units. Also decomposes them into their component parts.
 
-Example:
+Examples:
 ```python
+>>> from roman_numerals import PlaceValues
+
 >>> PlaceValues(1600).decompose()
 [1000, 600, 0, 0]
 
